@@ -45,7 +45,7 @@ const changePicIndex = (type) => {
 }
 import { getAssetsFileIcon } from '@/utils/commonUse.js'
 const optionList = ref(['HOME', 'SERVICES', 'GALLERY', 'CONTACT US'])
-const iconList = ref(['NAILS', 'WAXING', 'EYELASH', 'FACIAL', 'BACK & FEET RELAXING'])
+const iconList = ref(['NAILS', 'WAXING', 'EYELASH', 'SPA', 'MASSAGE'])
 const menuShow = ref(false)
 
 const scrollTo = (id) => {
@@ -89,7 +89,7 @@ const closeBigPhoto = () => {
   <div class="wrapper">
     <div id="HOME" class="header" :class="{'isPhone': !isComputer}">
       <div class="section1" :class="{'phoneFixed': !isComputer}">
-        <div class="section1Title">Central Nail Spa 2022</div>
+        <div class="section1Title">UNA NAIL</div>
         <div class="optionList">
           <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </div>
@@ -98,7 +98,7 @@ const closeBigPhoto = () => {
           <div style="cursor: pointer;margin: 20px 0;" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </el-drawer>
       </div> 
-      <div class="section2">Polish your life <hr>with perfect nails!</div>
+      <div class="section2">Elegance in Every Touch.<hr>Glamour in Every Detail.</div>
       <div class="section3"><img src="../assets/img/1.jpg" alt="" class="object-cover"></div>
       <div class="paintWall" />
     </div>
@@ -155,65 +155,98 @@ const closeBigPhoto = () => {
         <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 4" class="w-[25%] object-cover cursor-pointer" @click="show('d', pic, 4)">
       </div>
     </div>
+    <div class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82]">
+      <div class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
+      <div class="flex items-center px-[10%] gap-10">
+        <img class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service.png" alt="">
+        <div class="w-[26rem] flex flex-col relative">
+          <img class="w-[24rem] h-[16rem] object-cover" src="@/assets/img/servicePic1.jpg" alt="">
+          <div class="w-[24rem] h-[16rem]" />
+          <img class="w-[24rem] h-[16rem] object-cover absolute right-0 bottom-[3%]" src="@/assets/img/servicePic2.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <div v-if="!isComputer" class="iconList">
+      <div v-for="(item, index) in iconList" :key="index">
+        <img :src="getAssetsFileIcon(`${index + 1}.svg`)" alt="">
+        {{ item }}
+      </div>
+    </div>
     <!-- NAIL IT WITH STYLE! -->
-    <div v-if="isComputer" id="CONTACT US" class="w-screen flex igArea">
-      <img src="@/assets/img/pp.png" alt="" class="w-[30%] object-cover">
-      <div class="w-[80%] bg-[#E5D6CD] flex flex-col items-center justify-center gap-5">
+    <div id="CONTACT US" class="w-screen flex h-full igArea">
+      <img src="@/assets/img/pp.jpg" alt="" class="w-[30%] object-cover">
+      <div class="w-[80%] bg-[#E1DFD6] flex flex-col items-center justify-center gap-5">
         <span class="leading-[38.22px] text-[32px] font-bold mb-5" style="font-family: JosefinSlab;letter-spacing: 5px;">NAIL IT WITH STYLE!</span>
         <div class="flex gap-5 items-center">
           <img src="@/assets/img/ig.svg" alt="" class="w-[58px] h-[58px] mr-5">
           <div class="flex flex-col items-center justify-between">
-            <span class="text-[24px]" style="font-family: KaushanScript;letter-spacing: 5px;">Follow & Share</span>
-            <a href="https://www.instagram.com/centralnail745/" target="_blank" class="underline text-[24px]" style="font-family: KaiseiDecol;letter-spacing: 2px;">@Centralnail745</a>
+            <div class="text-[24px]" style="font-family: KaushanScript;letter-spacing: 5px;">Follow & Share</div>
+            <a href="https://www.instagram.com/una.nail.a" target="_blank" class="underline text-[24px]" style="font-family: KaiseiDecol;letter-spacing: 2px;">@una.nail.a</a>
           </div>
         </div>
       </div>
     </div>
-    <div class="footer">
-      <div class="iconList">
-        <div v-for="(item, index) in iconList" :key="index">
-          <img :src="getAssetsFileIcon(`${index + 1}.svg`)" alt="">
-          {{ item }}
-        </div>
+    <div v-if="isComputer" class="iconList">
+      <div v-for="(item, index) in iconList" :key="index">
+        <img :src="getAssetsFileIcon(`${index + 1}.svg`)" alt="">
+        {{ item }}
       </div>
-      <div id="CONTACT US" class="CONTACT">
+    </div>
+    <div class="footer !bg-[#F4CC82]">
+      <div class="CONTACT">
         <div  class="footerSection">
           <div class="footerContent">
             <div class="section1">
-              <div class="title">Central Nail Spa 2022</div>
-              <div>+1 631-521-6999</div>
-              <div>745 Commack Rd, Brentwood, NY <hr>11717, United States</div>
+              <div class="title mb-3">UNA NAIL</div>
+              <div class="flex flex-col">
+                <div>PHONE</div>
+                <div class="font-[600]">+1 631-521-6999</div>
+              </div>
+              <div class="flex flex-col">
+                <div>ADDRESS</div>
+                <div class="font-[600]">1610 B, Grand Ave, Baldwin, NY 11510</div>
+              </div>
+              <div>@2024 UNA NAIL. All Rights Reserved.</div>
             </div>
-            <div class="section2">
+            <!-- <div class="section2">
               <div class="time">OPENING HOURS</div>
               <div>Monday - Saturday<hr>10:00 - 19:30</div>
               <div>Sunday<hr>10:00 - 18:00</div>
-            </div>
+            </div> -->
             <div class="section3">
-              <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
+              <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)" class="font-[700]">{{ item }}</div>
             </div>
           </div>
-          <div class="footerImg"><img src="../assets/img/footerImg.svg" alt=""></div>
+          <div class="footerImg"><img src="../assets/img/footerImg.jpg" alt=""></div>
         </div>
-        <div class="phoneFooterSection">
-          <div class="flex gap-5 items-center follow mb-10">
-            <img src="@/assets/img/ig.svg" alt="">
-            <div class="flex flex-col items-center justify-between">
-              <span class="followText">Follow & Share</span>
-              <a href="https://www.instagram.com/centralnail745/" target="_blank" class="followLink">@Centralnail745</a>
+        <div class="phoneFooterSection gap-10">
+          <div class="text-[20px] font-[700] mb-[1rem]">UNA NAIL</div>
+          <div class="flex flex-col gap-2">
+            <div class="cursor-pointer my-1 font-[700]" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
+          </div>
+          <div class="flex flex-col gap-2">
+            <div class="flex flex-col">
+              <div>PHONE</div>
+              <div class="font-[600]">+1 631-521-6999</div>
+            </div>
+            <div class="flex flex-col">
+              <div>ADDRESS</div>
+              <div class="font-[600]">1610 B, Grand Ave, Baldwin, NY 11510</div>
             </div>
           </div>
-          <div class="title">Central Nail Spa 2022</div>
-          <div class="phone">+1 631-521-6999</div>
-          <div class="address mb-10">745 Commack Rd, Brentwood, NY <hr>11717, United States</div>
-          <div class="openHour mb-5">
-            <div class="title">OPENING HOURS</div>
-            <div class="time">
-              <div>Monday - Saturday<hr>10:00 - 19:30</div>
-              <div>Sunday<hr>10:00 - 18:00</div>
+          <div class="mb-5">
+            <div class="">OPENING HOURS</div>
+            <div class="flex flex-col font-[600]">
+              <div class="flex justify-between items-center">
+                <div>Monday - Saturday</div>
+                <div>10:00 - 19:30</div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>Sunday</div>
+                <div>10:00 - 18:00</div>
+              </div>
             </div>
           </div>
-          <div class="cursor-pointer my-1" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </div>
       </div>
     </div>
@@ -236,11 +269,10 @@ const closeBigPhoto = () => {
 .wrapper{
   display: flex;
   flex-direction: column;
-  gap: 50px;
 }
 .header {
   padding: 80px 120px;
-  background-color: #E5D6CD;
+  background-color: #F4CC82;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -268,7 +300,7 @@ const closeBigPhoto = () => {
       top: 0;
       width: 100%;
       padding: 25px 50px;
-      background-color: #E5D6CD;
+      background-color: #F4CC82;
       z-index: 100;
     }
     .section1Title{
@@ -348,6 +380,27 @@ const closeBigPhoto = () => {
 .phoneServicePrice{
   display: none;
 }
+.iconList{
+  width: 100%;
+  padding: 4.5rem 15%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 80px;
+  >div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Jomolhari;
+    gap: 10px;
+    img{
+      width: 125px;
+      height: 125px;
+    }
+  }
+}
 .footer{
   display: flex;
   flex-direction: column;
@@ -355,25 +408,6 @@ const closeBigPhoto = () => {
   align-items: center;
   // padding: 50px 0 0 ;
   gap: 50px;
-  .iconList{
-    padding: 0 120px;
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    >div{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-family: Jomolhari;
-      gap: 10px;
-      img{
-        width: 125px;
-        height: 125px;
-      }
-    }
-  }
   .CONTACT{
     width: 100%;
   }
@@ -383,7 +417,7 @@ const closeBigPhoto = () => {
     width: 100%;
     height: 341px;
     .footerContent{
-      background-color: #E5D6CD;
+      background-color: #F4CC82;
       width: 60%;
       height: 100%;
       display: flex;
@@ -392,7 +426,7 @@ const closeBigPhoto = () => {
       .section1{
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 20px;
         >div{
           font-family: KaiseiDecol;
           font-size: 14px;
@@ -421,7 +455,6 @@ const closeBigPhoto = () => {
         >div{
           font-family: KaiseiDecol;
           font-size: 14px;
-          font-weight: 400;
           cursor: pointer;
         }
         display: flex;
@@ -469,7 +502,20 @@ const closeBigPhoto = () => {
       height: 80px;
     }
   }
-  .servicePrice, .menu, .igArea{
+  .igArea{
+    flex-direction: column;
+    >img, >div{
+      width: 100%;
+    }
+    >div{
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    span{
+      display: none;
+    }
+  }
+  .servicePrice, .menu{
     display: none;
   }
   .phoneServicePrice{
@@ -481,66 +527,22 @@ const closeBigPhoto = () => {
       width: 100%;
     }
   }
+  .iconList{
+    flex-direction: column;
+  }
   .footer{
-    padding: 32px 0;
-    background-color: #E5D6CD;
-    .iconList, .footerSection{
+    padding: 3.5rem 0;
+    .footerSection{
       display: none;
     }
     .CONTACT{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       .phoneFooterSection{
-        width: 100%;
+        width: 60%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 15px;
-        .title{
-          font-size: 15px;
-          font-weight: 700;
-          font-family:InriaSans;
-        }
-        .follow{
-          display: flex;
-          align-items: flex-end;
-          img{
-            width: 29px;
-            height: 29px;
-          }
-          .followText{
-            font-family: KaushanScript;
-            letter-spacing: 5px;
-          }
-          .followLink{
-            text-decoration: underline;
-            font-family: KaiseiDecol;
-            letter-spacing: 2px;
-          }
-        }
-        .address, .phone{
-          text-align: center;
-          font-family: KaiseiDecol;
-        }
-        .openHour{
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          .title{
-            font-family: KaiseiDecol;
-          }
-          .time{
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            div{
-              font-size: 14px;
-              width: 100%;
-              font-family: KaiseiDecol;
-            }
-          }
-        }
       }
     }
   }
@@ -557,7 +559,21 @@ const closeBigPhoto = () => {
       }
     }
   }
-  .servicePrice, .menu, .igArea{
+     
+  .igArea{
+    flex-direction: column;
+    >img, >div{
+      width: 100%;
+    }
+    >div{
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    span{
+      display: none;
+    }
+  }
+  .servicePrice, .menu{
     display: none;
   }
   .phoneServicePrice{
@@ -569,10 +585,12 @@ const closeBigPhoto = () => {
       width: 100%;
     }
   }
+  .iconList{
+    flex-direction: column;
+  }
   .footer{
-    padding: 32px 0;
-    background-color: #E5D6CD;
-    .iconList, .footerSection{
+    padding: 3.5rem 0;
+    .footerSection{
       display: none;
     }
     .CONTACT{
@@ -582,53 +600,6 @@ const closeBigPhoto = () => {
         flex-direction: column;
         align-items: center;
         gap: 15px;
-        .title{
-          font-size: 20px;
-          font-weight: 700;
-          font-family:InriaSans;
-        }
-        .follow{
-          display: flex;
-          align-items: flex-end;
-          img{
-            width: 29px;
-            height: 29px;
-          }
-          .followText{
-            font-family: KaushanScript;
-            letter-spacing: 5px;
-          }
-          .followLink{
-            text-decoration: underline;
-            font-family: KaiseiDecol;
-            letter-spacing: 2px;
-          }
-        }
-        .address, .phone{
-          text-align: center;
-          font-family: KaiseiDecol;
-        }
-        .openHour{
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 10px;
-          .title{
-            font-family: KaiseiDecol;
-          }
-          .time{
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            div{
-              font-size: 14px;
-              width: 100%;
-              font-family: KaiseiDecol;
-            }
-          }
-        }
       }
     }
   }
