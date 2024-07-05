@@ -180,6 +180,7 @@ const closeBigPhoto = () => {
       <div class="font-[700] text-[#865105]">Services & Prices</div>
       <img class="w-full object-contain mt-[24px]" src="@/assets/img/service.png" alt="">
       <div class="w-[90%] mt-[42px]">
+        <!-- ?推不上去？ -->
         <Carousel :snapAlign="'center'" :breakpoints="breakpointsM">
           <Slide v-for="slide in 5" :key="slide" @click="show('d', slide, 5)">
             <div class="carousel__item">
