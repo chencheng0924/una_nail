@@ -66,7 +66,9 @@ const scrollTo = (id) => {
   }
   const element = document.getElementById(id)
   if(element){
-    element.scrollIntoView({behavior: 'smooth', block: 'start'})
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - 120;
+    window.scrollTo({behavior: 'smooth', top: offsetPosition})
   }
 }
 const screenWidth = ref(window.innerWidth);
@@ -98,7 +100,7 @@ const closeBigPhoto = () => {
 </script>
 
 <template>
-  <div class="wrapper">
+  <div class="wrapper ">
     <div id="HOME" class="header" :class="{'isPhone': !isComputer}">
       <div class="section1" :class="{'phoneFixed': !isComputer}">
         <div class="section1Title">UNA NAIL</div>
@@ -166,7 +168,7 @@ const closeBigPhoto = () => {
       </div>
     </div>
     <div class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] tablet:hidden mobile:hidden">
-      <div class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
+      <div id="SERVICES" class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
       <div class="flex items-center px-[10%] gap-10">
         <img class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service.png" alt="">
         <div class="w-[26rem] flex flex-col relative">
@@ -314,7 +316,7 @@ const closeBigPhoto = () => {
   flex-direction: column;
 }
 .header {
-  padding: 80px 120px;
+  padding: 8rem 120px;
   background-color: #F4CC82;
   display: flex;
   flex-direction: column;
@@ -338,13 +340,14 @@ const closeBigPhoto = () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 3rem 15%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #F4CC82;
+    z-index: 100;
     &.phoneFixed{
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 25px 50px;
-      background-color: #F4CC82;
-      z-index: 100;
+        padding: 25px 50px;
     }
     .section1Title{
       font-weight: 700;
