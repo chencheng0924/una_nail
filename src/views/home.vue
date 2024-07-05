@@ -15,7 +15,7 @@ const pType = ref('')
 const pLimit = ref(0)
 const nowIndex = ref(0)
 const nowPic = computed(() => {
-  return getAssetsFile(`${p.value}.png`)
+  return getAssetsFile(`${p.value}.jpg`)
 })
 const show = (type, idx, limit) => {
   pLimit.value = limit
@@ -35,6 +35,18 @@ const breakpoints = {
   // 1024 and up
   1290: {
     itemsToShow: 5,
+    snapAlign: 'start',
+  },
+}
+const breakpointsM = {
+  // 700px and up
+  700: {
+    itemsToShow: 1,
+    snapAlign: 'center',
+  },
+  // 1024 and up
+  1290: {
+    itemsToShow: 1,
     snapAlign: 'start',
   },
 }
@@ -109,7 +121,7 @@ const closeBigPhoto = () => {
           <Slide v-for="slide in 10" :key="slide" @click="show('m', slide, 10)">
             <div class="carousel__item">
               <!-- <img :src="getAssetsFile(`m${slide}.png`)" class="w-[200px]"> -->
-              <img :src="getAssetsFile(`m${slide}.png`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
+              <img :src="getAssetsFile(`m${slide}.jpg`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
             </div>
           </Slide>
           <template #addons>
@@ -118,44 +130,42 @@ const closeBigPhoto = () => {
         </Carousel>
       </div>
     </div>
+    <!-- 輪播RWD -->
     <div class="w-screen px-5 gap-3 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
-      <img :src="getAssetsFile(`m${pic}.png`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
+      <img :src="getAssetsFile(`m${pic}.jpg`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
     </div>
+    <!-- 圖片放大 + 遮罩 -->
     <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center pic z-[1000]" v-if="showBigPhoto">
       <div class="absolute right-10 top-5 text-xl font-semibold z-20 text-white cursor-pointer" @click="closeBigPhoto()">CLOSE</div>
-       <img src="@/assets/img/ca.png" class="rotate-180 w-[50px] absolute top-[50%] left-[10%] translate-y-[-50%] cursor-pointer mobile:left-[2%]" v-if="nowIndex > 1" @click="changePicIndex('back')">
+      <img src="@/assets/img/ca.png" class="rotate-180 w-[50px] absolute top-[50%] left-[10%] translate-y-[-50%] cursor-pointer mobile:left-[2%]" v-if="nowIndex > 1" @click="changePicIndex('back')">
       <img :src="nowPic" class="w-[70vw] h-[80vh] object-contain">
       <img src="@/assets/img/ca.png" class="w-[50px] absolute top-[50%] right-[10%] translate-y-[-50%] cursor-pointer mobile:right-[2%]" v-if="nowIndex < pLimit" @click="changePicIndex('go')">
     </div>
-    <div id="SERVICES" class="flex flex-col gap-[50px]">
-      <div class="servicePrice">
-        <div class="store"><img src="../assets/img/store.png" alt=""></div>
-        <div class="service"><img src="../assets/img/service.png" alt=""></div>
-      </div>
-      <div class="menu"><img src="../assets/img/menu.png" alt=""></div>
-      <div class="phoneServicePrice">
-        <img src="../assets/img/phoneService1.png" alt="">
-        <img src="../assets/img/phoneService2.png" alt="">
-        <img src="../assets/img/phoneService3.png" alt="">
-        <img src="../assets/img/phoneService4.png" alt="">
-        <img src="../assets/img/phoneService5.png" alt="">
-        <img src="../assets/img/phoneService6.png" alt="">
+    <div class="w-full h-[524px] relative flex justify-center items-end bg-[#F4CC82] tablet:hidden mobile:hidden">
+      <div class="w-[746px] h-[437px] relative bgimg">
+        <div data-aos="zoom-in" data-aos-duration="1500" class="bg-[#E1DFD6] w-[299px] h-[143px] font-extrabold text-[40px] text-center pt-[19px] text-[#9B6619] lato leading-[48px] tracking-widest absolute bottom-[108px] left-[-150px]">
+          About<br/>UNA NAIL
+        </div>
+        <img data-aos="fade-down-left" data-aos-duration="1500" src="@/assets/img/c1.jpg" alt="" class="w-[193px] h-[193px] rounded-[50%] absolute right-[-96.5px] bottom-[41px] object-cover">
+        <div class="px-[186px] pt-[72px] pb-[35px] leading-[23.04px] font-[600] tracking-widest flex flex-col gap-[12px]">
+          <div class="lato" data-aos="fade-up" data-aos-duration="2000">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and looking stunning.</div>
+        </div>
       </div>
     </div>
-    <!-- Nails Transformed, Beauty Defined. -->
-    <div id="GALLERY" class="w-screen flex items-center flex-col py-5 px-20 tablet:px-[28px] tablet:py-[41px]" >
-      <span class="text-[#865105] text-[32px] font-bold mb-5 tablet:text-[16px] tablet:text-center" style="font-family: 'InriaSans';letter-spacing: 5px;">Nails Transformed, Beauty Defined.</span>
-      <div class="w-full gap-3 mt-5 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
-        <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 4" class="w-[100%] h-auto object-cover cursor-pointer" @click="show('d', pic, 4)">
+    <div class="w-full bg-[#F4CC82] desktop:hidden flex flex-col items-center pt-[64px] gap-[24px]">
+      <div class="text-white text-center font-extrabold tracking-widest">
+        About<br/>UNA NAIL
       </div>
-      <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between tablet:grid tablet:grid-cols-2">
-        <img :src="getAssetsFile(`c${pic}.png`)" alt="" v-for="pic in 10" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('c', pic, 10)">
-      </div>
-      <div class="w-[1280px] flex gap-3 mt-5 px-20 justify-between tablet:hidden">
-        <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 4" class="w-[25%] object-cover cursor-pointer" @click="show('d', pic, 4)">
+      <div class="bgimgM h-[354px] w-full flex items-center justify-center pt-[300px] tracking-widest">
+        <div class="lato w-[60vw]">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and looking stunning.</div>
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82]">
+    <div id="GALLERY" class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20" >
+      <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between tablet:hidden mobile:hidden">
+        <img :src="getAssetsFile(`d${pic}.jpg`)" alt="" v-for="pic in 5" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('d', pic, 5)">
+      </div>
+    </div>
+    <div class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] tablet:hidden mobile:hidden">
       <div class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
       <div class="flex items-center px-[10%] gap-10">
         <img class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service.png" alt="">
@@ -165,6 +175,30 @@ const closeBigPhoto = () => {
           <img class="w-[24rem] h-[16rem] object-cover absolute right-0 bottom-[3%]" src="@/assets/img/servicePic2.jpg" alt="">
         </div>
       </div>
+    </div>
+    <div class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
+      <div class="font-[700] text-[#865105]">Services & Prices</div>
+      <img class="w-full object-contain mt-[24px]" src="@/assets/img/service.png" alt="">
+      <div class="w-[90%] mt-[42px]">
+        <Carousel :snapAlign="'center'" :breakpoints="breakpointsM">
+          <Slide v-for="slide in 5" :key="slide" @click="show('d', slide, 5)">
+            <div class="carousel__item">
+              <!-- <img :src="getAssetsFile(`m${slide}.png`)" class="w-[200px]"> -->
+              <img :src="getAssetsFile(`d${slide}.jpg`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
+            </div>
+          </Slide>
+          <template #addons>
+            <Navigation />
+          </template>
+        </Carousel>
+      </div>
+      <!-- <div class="flex items-center px-[10%] gap-10">
+        <div class="w-[26rem] flex flex-col relative">
+          <img class="w-[24rem] h-[16rem] object-cover" src="@/assets/img/servicePic1.jpg" alt="">
+          <div class="w-[24rem] h-[16rem]" />
+          <img class="w-[24rem] h-[16rem] object-cover absolute right-0 bottom-[3%]" src="@/assets/img/servicePic2.jpg" alt="">
+        </div>
+      </div> -->
     </div>
     <div v-if="!isComputer" class="iconList">
       <div v-for="(item, index) in iconList" :key="index">
@@ -254,6 +288,14 @@ const closeBigPhoto = () => {
 </template>
 
 <style lang="scss" scoped>
+.bgimg {
+  background-image: url('@/assets/img/re.png');
+}
+.bgimgM {
+  background-image: url('@/assets/img/rem.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 @media screen and (min-width: 1290px) {
   :deep(.carousel__prev) {
     left: -45px;
