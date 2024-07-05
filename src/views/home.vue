@@ -65,6 +65,7 @@ const scrollTo = (id) => {
     menuShow.value = false
   }
   const element = document.getElementById(id)
+  console.log(element)
   if(element){
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - 120;
@@ -117,7 +118,7 @@ const closeBigPhoto = () => {
       <div class="paintWall" />
     </div>
     <!-- 輪播 -->
-    <div class="w-screen py-10 flex flex-col items-center tablet:hidden">
+    <div v-if="isComputer" id="GALLERY" class="w-screen py-10 flex flex-col items-center tablet:hidden">
       <div class="max-w-[1200px]">
         <Carousel :snapAlign="'center'" :breakpoints="breakpoints">
           <Slide v-for="slide in 10" :key="slide" @click="show('m', slide, 10)">
@@ -133,7 +134,7 @@ const closeBigPhoto = () => {
       </div>
     </div>
     <!-- 輪播RWD -->
-    <div class="w-screen px-5 gap-3 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
+    <div v-else id="GALLERY" class="w-screen px-5 gap-3 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
       <img :src="getAssetsFile(`m${pic}.jpg`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
     </div>
     <!-- 圖片放大 + 遮罩 -->
@@ -162,12 +163,12 @@ const closeBigPhoto = () => {
         <div class="lato w-[60vw]">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and looking stunning.</div>
       </div>
     </div>
-    <div id="GALLERY" class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20" >
+    <div class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20" >
       <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between tablet:hidden mobile:hidden">
         <img :src="getAssetsFile(`d${pic}.jpg`)" alt="" v-for="pic in 5" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('d', pic, 5)">
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] tablet:hidden mobile:hidden">
+    <div v-if="isComputer" class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] tablet:hidden mobile:hidden">
       <div id="SERVICES" class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
       <div class="flex items-center px-[10%] gap-10">
         <img class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service.png" alt="">
@@ -178,8 +179,8 @@ const closeBigPhoto = () => {
         </div>
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
-      <div class="font-[700] text-[#865105]">Services & Prices</div>
+    <div v-else class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
+      <div id="SERVICES" class="font-[700] text-[#865105]">Services & Prices</div>
       <img class="w-full object-contain mt-[24px]" src="@/assets/img/service.png" alt="">
       <div class="w-[90%] mt-[42px]">
         <!-- ?推不上去？ -->
