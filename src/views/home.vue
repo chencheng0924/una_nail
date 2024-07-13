@@ -15,7 +15,7 @@ const pType = ref('')
 const pLimit = ref(0)
 const nowIndex = ref(0)
 const nowPic = computed(() => {
-  return getAssetsFile(`${p.value}.jpg`)
+  return getAssetsFile(`${p.value}.png`)
 })
 const show = (type, idx, limit) => {
   pLimit.value = limit
@@ -23,6 +23,7 @@ const show = (type, idx, limit) => {
   showBigPhoto.value = true
   nowIndex.value = idx
   p.value = type + idx.toString()
+  console.log(p.value)
   const elHtml = document.querySelector('html')
   elHtml.style.overflowY = 'hidden'
 }
@@ -113,8 +114,8 @@ const closeBigPhoto = () => {
           <div style="cursor: pointer;margin: 20px 0;" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
         </el-drawer>
       </div> 
-      <div class="section2">Elegance in Every Touch.<hr>Glamour in Every Detail.</div>
-      <div class="section3"><img src="../assets/img/1.jpg" alt="" class="object-cover"></div>
+      <div class="section2 !lato mobile:!text-[13px]">Elegance in Every Touch.<hr>Glamour in Every Detail.</div>
+      <div class="section3"><img src="../assets/img/1.png" alt="" class="object-cover"></div>
       <div class="paintWall" />
     </div>
     <!-- 輪播 -->
@@ -124,7 +125,7 @@ const closeBigPhoto = () => {
           <Slide v-for="slide in 10" :key="slide" @click="show('m', slide, 10)">
             <div class="carousel__item">
               <!-- <img :src="getAssetsFile(`m${slide}.png`)" class="w-[200px]"> -->
-              <img :src="getAssetsFile(`m${slide}.jpg`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
+              <img :src="getAssetsFile(`m${slide}.png`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
             </div>
           </Slide>
           <template #addons>
@@ -135,7 +136,7 @@ const closeBigPhoto = () => {
     </div>
     <!-- 輪播RWD -->
     <div v-else id="GALLERY" class="w-screen px-5 gap-3 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
-      <img :src="getAssetsFile(`m${pic}.jpg`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
+      <img :src="getAssetsFile(`m${pic}.png`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
     </div>
     <!-- 圖片放大 + 遮罩 -->
     <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center pic z-[1000]" v-if="showBigPhoto">
@@ -156,7 +157,7 @@ const closeBigPhoto = () => {
       </div>
     </div>
     <div class="w-full bg-[#F4CC82] desktop:hidden flex flex-col items-center pt-[64px] gap-[24px]">
-      <div class="text-white text-center font-extrabold tracking-widest">
+      <div class="text-white text-center font-extrabold tracking-widest text-[22px]">
         About<br/>UNA NAIL
       </div>
       <div class="bgimgM h-[354px] w-full flex items-center justify-center pt-[300px] tracking-widest">
@@ -164,14 +165,14 @@ const closeBigPhoto = () => {
       </div>
     </div>
     <div class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20" >
-      <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between tablet:hidden mobile:hidden">
-        <img :src="getAssetsFile(`d${pic}.jpg`)" alt="" v-for="pic in 5" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('d', pic, 5)">
+      <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between mobile:hidden">
+        <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 5" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('d', pic, 5)">
       </div>
     </div>
-    <div v-if="isComputer" class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] tablet:hidden mobile:hidden">
+    <div v-if="isComputer" class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] mobile:hidden">
       <div id="SERVICES" class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
       <div class="flex items-center px-[10%] gap-10">
-        <img class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service.png" alt="">
+        <img @click="show('service', 0, 1)" class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service0.png" alt="">
         <div class="w-[26rem] flex flex-col relative">
           <img class="w-[24rem] h-[16rem] object-cover" src="@/assets/img/servicePic1.jpg" alt="">
           <div class="w-[24rem] h-[16rem]" />
@@ -188,7 +189,7 @@ const closeBigPhoto = () => {
           <Slide v-for="slide in 5" :key="slide" @click="show('d', slide, 5)">
             <div class="carousel__item">
               <!-- <img :src="getAssetsFile(`m${slide}.png`)" class="w-[200px]"> -->
-              <img :src="getAssetsFile(`d${slide}.jpg`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
+              <img :src="getAssetsFile(`d${slide}.png`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
             </div>
           </Slide>
           <template #addons>
@@ -204,15 +205,15 @@ const closeBigPhoto = () => {
         </div>
       </div> -->
     </div>
-    <div v-if="!isComputer" class="iconList">
+    <div class="iconList">
       <div v-for="(item, index) in iconList" :key="index">
         <img :src="getAssetsFileIcon(`${index + 1}.svg`)" alt="">
         {{ item }}
       </div>
     </div>
     <!-- NAIL IT WITH STYLE! -->
-    <div id="CONTACT US" class="w-screen flex h-full igArea">
-      <img src="@/assets/img/pp.jpg" alt="" class="w-[30%] object-cover">
+    <div id="CONTACT US" class="w-screen flex h-[23rem] mobile:h-full igArea">
+      <img src="@/assets/img/pp.png" alt="" class="w-[30%] mobile:h-[16rem] object-cover">
       <div class="w-[80%] bg-[#E1DFD6] flex flex-col items-center justify-center gap-5">
         <span class="leading-[38.22px] text-[32px] font-bold mb-5" style="font-family: JosefinSlab;letter-spacing: 5px;">NAIL IT WITH STYLE!</span>
         <div class="flex gap-5 items-center">
@@ -224,12 +225,12 @@ const closeBigPhoto = () => {
         </div>
       </div>
     </div>
-    <div v-if="isComputer" class="iconList">
+    <!-- <div v-if="isComputer" class="iconList">
       <div v-for="(item, index) in iconList" :key="index">
         <img :src="getAssetsFileIcon(`${index + 1}.svg`)" alt="">
         {{ item }}
       </div>
-    </div>
+    </div> -->
     <div class="footer !bg-[#F4CC82]">
       <div class="CONTACT">
         <div  class="footerSection">
@@ -255,26 +256,26 @@ const closeBigPhoto = () => {
               <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)" class="font-[700]">{{ item }}</div>
             </div>
           </div>
-          <div class="footerImg"><img src="../assets/img/footerImg.jpg" alt=""></div>
+          <div class="footerImg"><img src="../assets/img/footerImg.png" alt=""></div>
         </div>
         <div class="phoneFooterSection gap-10">
           <div class="text-[20px] font-[700] mb-[1rem]">UNA NAIL</div>
           <div class="flex flex-col gap-2">
-            <div class="cursor-pointer my-1 font-[700]" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
+            <div class="cursor-pointer my-1 font-[700] mobile:font-[400]" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
           </div>
           <div class="flex flex-col gap-2">
             <div class="flex flex-col">
-              <div>PHONE</div>
-              <div class="font-[600]">+1 631-521-6999</div>
+              <div class="mobile:font-[600]">PHONE</div>
+              <div class="font-[600] mobile:font-[300]">+1 631-521-6999</div>
             </div>
             <div class="flex flex-col">
-              <div>ADDRESS</div>
-              <div class="font-[600]">1610 B, Grand Ave, Baldwin, NY 11510</div>
+              <div class="mobile:font-[600]">ADDRESS</div>
+              <div class="font-[600] mobile:font-[300]">1610 B, Grand Ave, Baldwin, NY 11510</div>
             </div>
           </div>
-          <div class="mb-5">
-            <div class="">OPENING HOURS</div>
-            <div class="flex flex-col font-[600]">
+          <div class="mb-2">
+            <div class="mobile:font-[600]">OPENING HOURS</div>
+            <div class="flex flex-col font-[600] mobile:font-[300]">
               <div class="flex justify-between items-center">
                 <div>Monday - Saturday</div>
                 <div>10:00 - 19:30</div>
@@ -285,6 +286,7 @@ const closeBigPhoto = () => {
               </div>
             </div>
           </div>
+          <div class="text-[10px] font-[300]">@2024 UNA NAIL. All Rights Reserved.</div>
         </div>
       </div>
     </div>
@@ -292,6 +294,9 @@ const closeBigPhoto = () => {
 </template>
 
 <style lang="scss" scoped>
+.lato {
+  font-family: "Lato", sans-serif;
+}
 .bgimg {
   background-image: url('@/assets/img/re.png');
 }
@@ -368,9 +373,9 @@ const closeBigPhoto = () => {
     }
   }
   .section2{
-    font-size: 40px;
+    font-size: 24px;
     font-weight: 400;
-    font-family: Jomolhari;
+    // font-family: Jomolhari;
     letter-spacing: 8px;
     text-align: center;
   }
