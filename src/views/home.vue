@@ -182,7 +182,7 @@ const closeBigPhoto = () => {
     </div>
     <div v-else class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
       <div id="SERVICES" class="font-[700] text-[#865105]">Services & Prices</div>
-      <img class="w-full object-contain mt-[24px]" src="@/assets/img/service.png" alt="">
+      <img class="w-full object-contain mt-[24px]" src="@/assets/img/service0.png" alt="">
       <div class="w-[90%] mt-[42px]">
         <!-- ?推不上去？ -->
         <Carousel :snapAlign="'center'" :breakpoints="breakpointsM">
