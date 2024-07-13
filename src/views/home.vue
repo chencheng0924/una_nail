@@ -286,7 +286,7 @@ const closeBigPhoto = () => {
               </div>
             </div>
           </div>
-          <div class="text-[10px] font-[300]">@2024 UNA NAIL. All Rights Reserved.</div>
+          <div class="text-[10px] font-[300]">@2024 UNA NAIL. All Rights Reserved. </div>
         </div>
       </div>
     </div>
