@@ -14,15 +14,17 @@ const p = ref('')
 const pType = ref('')
 const pLimit = ref(0)
 const nowIndex = ref(0)
+const picType = ref('')
 const nowPic = computed(() => {
-  return getAssetsFile(`${p.value}.png`)
+  return getAssetsFile(`${p.value}.${picType.value}`)
 })
-const show = (type, idx, limit) => {
+const show = (type, idx, limit, picTypeName) => {
   pLimit.value = limit
   pType.value = type
   showBigPhoto.value = true
   nowIndex.value = idx
   p.value = type + idx.toString()
+  picType.value = picTypeName
   console.log(p.value)
   const elHtml = document.querySelector('html')
   elHtml.style.overflowY = 'hidden'
@@ -111,10 +113,13 @@ const closeBigPhoto = () => {
         </div>
         <div @click="menuShow = true" class="menuIcon"><img src="../assets/icon/menuIcon.svg" alt=""></div>
         <el-drawer v-model="menuShow" :with-header="false" size="45%">
-          <div style="cursor: pointer;margin: 20px 0;" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
+          <div style="cursor: pointer;margin: 20px 0;" v-for="(item, index) in optionList" :key="index"
+            @click="scrollTo(item)">{{ item }}</div>
         </el-drawer>
-      </div> 
-      <div class="section2 !lato mobile:!text-[13px]">Elegance in Every Touch.<hr>Glamour in Every Detail.</div>
+      </div>
+      <div class="section2 !lato mobile:!text-[13px]">Elegance in Every Touch.
+        <hr>Glamour in Every Detail.
+      </div>
       <div class="section3"><img src="../assets/img/1.png" alt="" class="object-cover"></div>
       <div class="paintWall" />
     </div>
@@ -122,7 +127,7 @@ const closeBigPhoto = () => {
     <div v-if="isComputer" id="GALLERY" class="w-screen py-10 flex flex-col items-center tablet:hidden">
       <div class="max-w-[1200px]">
         <Carousel :snapAlign="'center'" :breakpoints="breakpoints">
-          <Slide v-for="slide in 10" :key="slide" @click="show('m', slide, 10)">
+          <Slide v-for="slide in 10" :key="slide" @click="show('b', slide, 10, 'jpg')">
             <div class="carousel__item">
               <!-- <img :src="getAssetsFile(`m${slide}.png`)" class="w-[200px]"> -->
               <img :src="getAssetsFile(`m${slide}.png`)" class="w-[220px] h-[281px] object-cover cursor-pointer">
@@ -136,51 +141,76 @@ const closeBigPhoto = () => {
     </div>
     <!-- 輪播RWD -->
     <div v-else id="GALLERY" class="w-screen px-5 gap-3 tablet:grid tablet:grid-cols-2 mb-5 desktop:hidden">
-      <img :src="getAssetsFile(`m${pic}.png`)" alt="" v-for="pic in 6" class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('m', pic, 6)">
+      <img :src="getAssetsFile(`m${pic}.png`)" alt="" v-for="pic in 6"
+        class="w-[100%] h-[100%] object-cover cursor-pointer" @click="show('b', pic, 6, 'jpg')">
     </div>
     <!-- 圖片放大 + 遮罩 -->
-    <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center pic z-[1000]" v-if="showBigPhoto" @click="closeBigPhoto()">
-      <div class="absolute right-10 top-5 text-xl font-semibold z-20 text-white cursor-pointer" @click="closeBigPhoto()">CLOSE</div>
-      <img src="@/assets/img/ca.png" class="rotate-180 w-[50px] absolute top-[50%] left-[10%] translate-y-[-50%] cursor-pointer mobile:left-[2%]" v-if="nowIndex > 1" @click="changePicIndex('back')">
-      <img :src="nowPic" class="w-[70vw] h-[80vh] object-contain">
-      <img src="@/assets/img/ca.png" class="w-[50px] absolute top-[50%] right-[10%] translate-y-[-50%] cursor-pointer mobile:right-[2%]" v-if="nowIndex < pLimit" @click="changePicIndex('go')">
+    <div class="fixed top-0 left-0 w-screen h-screen flex items-center justify-center z-[1000]" v-if="showBigPhoto">
+      <div class="pic w-screen h-screen absolute left-0 top-0" @click="closeBigPhoto()"></div>
+      <div class="absolute right-10 top-5 text-xl font-semibold z-20 text-white cursor-pointer"
+        @click="closeBigPhoto()">CLOSE</div>
+      <img src="@/assets/img/ca.png"
+        class="rotate-180 w-[50px] absolute top-[50%] left-[10%] translate-y-[-50%] cursor-pointer mobile:left-[2%] z-[10]"
+        v-if="nowIndex > 1" @click="changePicIndex('back')">
+      <img :src="nowPic" class="h-[80vh] object-contain relative z-[10] mobile:hidden">
+      <img :src="nowPic" class="w-[60vw] object-contain relative z-[10] mobile:flex">
+      <img src="@/assets/img/ca.png"
+        class="w-[50px] absolute top-[50%] right-[10%] translate-y-[-50%] cursor-pointer mobile:right-[2%] z-[10]"
+        v-if="nowIndex < pLimit" @click="changePicIndex('go')">
     </div>
     <div class="w-full h-[524px] relative flex justify-center items-end bg-[#F4CC82] tablet:hidden mobile:hidden">
       <div class="w-[746px] h-[437px] relative bgimg">
-        <div data-aos="zoom-in" data-aos-duration="1500" class="bg-[#E1DFD6] w-[299px] h-[143px] font-extrabold text-[40px] text-center pt-[19px] text-[#9B6619] lato leading-[48px] tracking-widest absolute bottom-[108px] left-[-150px]">
-          About<br/>UNA NAIL
+        <div data-aos="zoom-in" data-aos-duration="1500"
+          class="bg-[#E1DFD6] w-[299px] h-[143px] font-extrabold text-[40px] text-center pt-[19px] text-[#9B6619] lato leading-[48px] tracking-widest absolute bottom-[108px] left-[-150px]">
+          About<br />UNA NAIL
         </div>
-        <img data-aos="fade-down-left" data-aos-duration="1500" src="@/assets/img/c1.jpg" alt="" class="w-[193px] h-[193px] rounded-[50%] absolute right-[-96.5px] bottom-[41px] object-cover">
-        <div class="px-[186px] pt-[72px] pb-[35px] leading-[23.04px] font-[600] tracking-widest flex flex-col gap-[12px]">
-          <div class="lato" data-aos="fade-up" data-aos-duration="2000">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and looking stunning.</div>
+        <img data-aos="fade-down-left" data-aos-duration="1500" src="@/assets/img/c1.jpg" alt=""
+          class="w-[193px] h-[193px] rounded-[50%] absolute right-[-96.5px] bottom-[41px] object-cover">
+        <div
+          class="px-[186px] pt-[72px] pb-[35px] leading-[23.04px] font-[600] tracking-widest flex flex-col gap-[12px]">
+          <div class="lato" data-aos="fade-up" data-aos-duration="2000">Experience the epitome of luxury and relaxation
+            at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a
+            comprehensive range of services that cater to your every nail care need. Our expert technicians specialize
+            in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that
+            you leave our spa feeling utterly pampered and looking stunning.</div>
         </div>
       </div>
     </div>
     <div class="w-full bg-[#F4CC82] desktop:hidden flex flex-col items-center pt-[64px] gap-[24px]">
       <div class="text-white text-center font-extrabold tracking-widest text-[22px]">
-        About<br/>UNA NAIL
+        About<br />UNA NAIL
       </div>
       <div class="bgimgM h-[354px] w-full flex items-center justify-center pt-[300px] tracking-widest">
-        <div class="lato w-[60vw]">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments, spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and looking stunning.</div>
+        <div class="lato w-[60vw]">Experience the epitome of luxury and relaxation at our No.1 Best Nail Spa in NY, New
+          York. With an unrivaled reputation for excellence, we offer a comprehensive range of services that cater to
+          your every nail care need. Our expert technicians specialize in manicures, pedicures, tips, SNS treatments,
+          spa pedicures, spa manicures, and nail design, ensuring that you leave our spa feeling utterly pampered and
+          looking stunning.</div>
       </div>
     </div>
-    <div class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20" >
+    <div class="w-screen flex items-center flex-col pt-[111px] pb-[189px] px-20">
       <div class="max-w-[1200px] w-full flex flex-wrap gap-5 justify-between mobile:hidden">
-        <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 5" class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer" @click="show('d', pic, 5)">
+        <img :src="getAssetsFile(`d${pic}.png`)" alt="" v-for="pic in 5"
+          class="w-[191px] h-[250px] tablet:w-[100%] tablet:h-auto object-cover cursor-pointer"
+          @click="show('d', pic, 5)">
       </div>
     </div>
-    <div v-if="isComputer" class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] mobile:hidden">
+    <div v-if="isComputer"
+      class="flex flex-col justify-center items-center gap-[2rem] py-[5rem] bg-[#F4CC82] mobile:hidden">
       <div id="SERVICES" class="text-[36px] font-[700] text-[#865105]">Services & Prices</div>
       <div class="flex items-center px-[10%] gap-10">
-        <img @click="show('service', 0, 1)" class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service0.png" alt="">
+        <img @click="show('service', 0, 1)" class="w-[35rem] h-[42rem] object-contain" src="@/assets/img/service0.png"
+          alt="">
         <div class="w-[26rem] flex flex-col relative">
           <img class="w-[24rem] h-[16rem] object-cover" src="@/assets/img/servicePic1.jpg" alt="">
           <div class="w-[24rem] h-[16rem]" />
-          <img class="w-[24rem] h-[16rem] object-cover absolute right-0 bottom-[3%]" src="@/assets/img/servicePic2.jpg" alt="">
+          <img class="w-[24rem] h-[16rem] object-cover absolute right-0 bottom-[3%]" src="@/assets/img/servicePic2.jpg"
+            alt="">
         </div>
       </div>
     </div>
-    <div v-else class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
+    <div v-else
+      class="flex flex-col justify-center items-center bg-[#F4CC82] desktop:hidden pt-[70px] px-[24px] pb-[62px]">
       <div id="SERVICES" class="font-[700] text-[#865105]">Services & Prices</div>
       <img class="w-full object-contain mt-[24px]" src="@/assets/img/service0.png" alt="">
       <div class="w-[90%] mt-[42px]">
@@ -215,12 +245,14 @@ const closeBigPhoto = () => {
     <div id="CONTACT US" class="w-screen flex h-[23rem] mobile:h-full igArea">
       <img src="@/assets/img/pp.png" alt="" class="w-[30%] mobile:h-[16rem] object-cover">
       <div class="w-[80%] bg-[#E1DFD6] flex flex-col items-center justify-center gap-5">
-        <span class="leading-[38.22px] text-[32px] font-bold mb-5" style="font-family: JosefinSlab;letter-spacing: 5px;">NAIL IT WITH STYLE!</span>
+        <span class="leading-[38.22px] text-[32px] font-bold mb-5"
+          style="font-family: JosefinSlab;letter-spacing: 5px;">NAIL IT WITH STYLE!</span>
         <div class="flex gap-5 items-center">
           <img src="@/assets/img/ig.svg" alt="" class="w-[58px] h-[58px] mr-5">
           <div class="flex flex-col items-center justify-between">
             <div class="text-[24px]" style="font-family: KaushanScript;letter-spacing: 5px;">Follow & Share</div>
-            <a href="https://www.instagram.com/una.nail.a" target="_blank" class="underline text-[24px]" style="font-family: KaiseiDecol;letter-spacing: 2px;">@una.nail.a</a>
+            <a href="https://www.instagram.com/una.nail.a" target="_blank" class="underline text-[24px]"
+              style="font-family: KaiseiDecol;letter-spacing: 2px;">@una.nail.a</a>
           </div>
         </div>
       </div>
@@ -233,7 +265,7 @@ const closeBigPhoto = () => {
     </div> -->
     <div class="footer !bg-[#F4CC82]">
       <div class="CONTACT">
-        <div  class="footerSection">
+        <div class="footerSection">
           <div class="footerContent">
             <div class="section1">
               <div class="title mb-3">UNA NAIL</div>
@@ -253,7 +285,8 @@ const closeBigPhoto = () => {
               <div>Sunday<hr>10:00 - 18:00</div>
             </div> -->
             <div class="section3">
-              <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)" class="font-[700]">{{ item }}</div>
+              <div v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)" class="font-[700]">{{ item
+                }}</div>
             </div>
           </div>
           <div class="footerImg"><img src="../assets/img/footerImg.png" alt=""></div>
@@ -261,7 +294,8 @@ const closeBigPhoto = () => {
         <div class="phoneFooterSection gap-10">
           <div class="text-[20px] font-[700] mb-[1rem]">UNA NAIL</div>
           <div class="flex flex-col gap-2">
-            <div class="cursor-pointer my-1 font-[700] mobile:font-[400]" v-for="(item, index) in optionList" :key="index" @click="scrollTo(item)">{{ item }}</div>
+            <div class="cursor-pointer my-1 font-[700] mobile:font-[400]" v-for="(item, index) in optionList"
+              :key="index" @click="scrollTo(item)">{{ item }}</div>
           </div>
           <div class="flex flex-col gap-2">
             <div class="flex flex-col">
